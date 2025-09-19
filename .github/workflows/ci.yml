@@ -29,7 +29,7 @@ jobs:
         run: chmod +x ./gradlew
 
       # Rodar o build do módulo de library
-      - name: Build AAR (nativelibtest)
+      - name: Build AAR (sample_building_kotlin_applications-kotlin-dsl)
         run: ./gradlew :sample_building_kotlin_applications-kotlin-dsl:clean :sample_building_kotlin_applications-kotlin-dsl:assembleRelease
 
       # Upload do artefato AAR gerado
