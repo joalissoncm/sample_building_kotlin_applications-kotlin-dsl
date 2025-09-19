@@ -1,0 +1,40 @@
+name: Build AAR LIB
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch: # Permite execução manual
+
+jobs:
+  build-aar:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout do código
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Configuração do JDK
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      # Dar permissão ao wrapper
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x ./gradlew
+
+      # Rodar o build do módulo de library
+      - name: Build AAR (nativelibtest)
+        run: ./gradlew :sample_building_kotlin_applications-kotlin-dsl:clean :sample_building_kotlin_applications-kotlin-dsl:assembleRelease
+
+      # Upload do artefato AAR gerado
+      - name: Upload AAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sample_building_kotlin_applications-kotlin-dsl
+          path: sample_building_kotlin_applications-kotlin-dsl/build/outputs/aar/*.aar
