@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.kotlin.jvm) // <1>
     application // <2>
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
 repositories {
